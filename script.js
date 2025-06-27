@@ -121,3 +121,52 @@ function spamPopups() {
 for (let i = 0; i < 10; i++) {
   createPopup(Math.random() < 0.3);
 }
+
+// 20秒カウントダウン最前面ポップアップ
+function topCountdownPopup() {
+  const popup = document.createElement("div");
+  popup.className = "popup countdown";
+  popup.style.position = "fixed";
+  popup.style.top = "0";
+  popup.style.left = "50%";
+  popup.style.transform = "translateX(-50%)";
+  popup.style.width = "350px";
+  popup.style.zIndex = "2000"; // 最前面
+  popup.style.backgroundColor = "#660000";
+  popup.style.color = "yellow";
+  popup.style.border = "4px solid yellow";
+  popup.style.fontWeight = "bold";
+  popup.style.fontSize = "16px";
+  popup.style.textAlign = "center";
+  popup.style.padding = "10px";
+  popup.style.boxShadow = "0 0 15px yellow";
+
+  let counter = 20;
+  popup.innerHTML = `
+    <div>⚠️ システム警告 - 自動ウイルス感染まであと <span id="topTimer">${counter}</span> 秒 ⚠️</div>
+  `;
+
+  document.body.appendChild(popup);
+
+  const timerEl = popup.querySelector("#topTimer");
+  const interval = setInterval(() => {
+    counter--;
+    timerEl.textContent = counter;
+    if (counter <= 0) {
+      clearInterval(interval);
+      popup.innerHTML = `
+        <div>💀 ウイルスに感染しました！即座に対応してください！ 💀</div>
+      `;
+      // 色もヤバめに変える
+      popup.style.backgroundColor = "#ff0000";
+      popup.style.color = "#000";
+      popup.style.borderColor = "#000";
+      popup.style.animation = "shake 0.2s infinite";
+    }
+  }, 1000);
+}
+
+// ページロード時に最上部カウントダウン開始
+window.addEventListener("load", () => {
+  topCountdownPopup();
+});
