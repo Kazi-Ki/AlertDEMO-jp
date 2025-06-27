@@ -157,10 +157,10 @@ function topCountdownPopup() {
       popup.innerHTML = `
         <div>💀 ウイルスに感染しました！即座に対応してください！ 💀</div>
       `;
-      // 色もヤバめに変える
-      popup.style.backgroundColor = "#ff0000";
-      popup.style.color = "#000";
-      popup.style.borderColor = "#000";
+      // 色を黒に変える
+      popup.style.backgroundColor = "#000000";
+      popup.style.color = "#f00";
+      popup.style.borderColor = "#f00";
       popup.style.animation = "shake 0.2s infinite";
     }
   }, 1000);
@@ -169,4 +169,27 @@ function topCountdownPopup() {
 // ページロード時に最上部カウントダウン開始
 window.addEventListener("load", () => {
   topCountdownPopup();
+});
+
+function animatePopupsFade() {
+  const popups = document.querySelectorAll('.popup');
+  if (popups.length === 0) return;
+
+  setInterval(() => {
+    popups.forEach(popup => {
+      // フェードアウト
+      popup.style.opacity = 0;
+    });
+    setTimeout(() => {
+      popups.forEach(popup => {
+        // フェードイン
+        popup.style.opacity = 1;
+      });
+    }, 2000); // 2秒フェードアウトしたら戻す
+  }, 6000); // 6秒ごとに繰り返す
+}
+
+// ページロード後に動かす
+window.addEventListener('load', () => {
+  animatePopupsFade();
 });
