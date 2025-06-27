@@ -11,6 +11,13 @@
       overflow: hidden;
       height: 100vh;
       font-family: sans-serif;
+      animation: chaosZoom 10s infinite alternate ease-in-out;
+    }
+
+    @keyframes chaosZoom {
+      0% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
+      50% { transform: scale(1.05) rotate(1deg); filter: hue-rotate(20deg); }
+      100% { transform: scale(0.98) rotate(-1deg); filter: hue-rotate(-20deg); }
     }
 
     .popup {
@@ -82,10 +89,49 @@
       font-size: 12px;
       filter: blur(0.8px);
     }
+
+    /* 中央デカポップアップ */
+    .center-alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border: 6px solid yellow;
+      padding: 40px;
+      box-shadow: 0 0 30px black;
+      text-align: center;
+      z-index: 1000;
+      max-width: 500px;
+      animation: pulse 1.5s infinite;
+    }
+
+    .center-alert h1 {
+      margin-top: 0;
+      color: darkred;
+      font-size: 24px;
+    }
+
+    .center-alert p {
+      font-size: 16px;
+      color: red;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.05); }
+    }
   </style>
 </head>
 <body>
 
+<!-- 🔥中央でか警告 -->
+<div class="center-alert">
+  <h1>⚠ 緊急セキュリティ警告 ⚠</h1>
+  <p>あなたのPCは重大なウイルスに感染しています。<br>今すぐ保護してください！</p>
+</div>
+
+<!-- 🔘下の「今すぐ保護」ボタン -->
 <button class="action-btn" onclick="spamPopups()">今すぐ保護する</button>
 
 <script>
@@ -108,7 +154,6 @@
   function createPopup(isGlitch = false) {
     const popup = document.createElement("div");
     popup.className = "popup";
-
     if (isGlitch) popup.classList.add("glitch");
 
     popup.style.top = `${Math.random() * 80}vh`;
@@ -126,21 +171,26 @@
     `;
 
     popup.querySelector(".close-btn").addEventListener("click", () => {
-      // 教育演出：閉じようとしても閉じられない（むしろ増える）
-      createPopup(Math.random() < 0.2);
+      // 閉じたフリして…むしろ増える
+      for (let i = 0; i < 2; i++) {
+        createPopup(Math.random() < 0.3);
+      }
     });
 
     document.body.appendChild(popup);
   }
 
   function spamPopups() {
+    // ボタン押すと増える
     for (let i = 0; i < 10; i++) {
-      const isGlitch = Math.random() < 0.3;
-      createPopup(isGlitch);
+      createPopup(Math.random() < 0.3);
     }
+    // 初回は中央ウィンドウを消す（ネタバレして誘導したいならここで飛ばす）
+    const center = document.querySelector(".center-alert");
+    if (center) center.remove();
   }
 
-  // 初期表示
+  // 初期表示：ちょっとだけバラ撒き
   for (let i = 0; i < 10; i++) {
     createPopup(Math.random() < 0.3);
   }
