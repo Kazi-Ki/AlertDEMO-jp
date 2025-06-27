@@ -193,3 +193,8 @@ function animatePopupsFade() {
 window.addEventListener('load', () => {
   animatePopupsFade();
 });
+
+setTimeout(() => {
+  window.location.href = './warning.html';
+}, 30000); // 30秒後にジャンプ
+
