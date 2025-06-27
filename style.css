@@ -1,0 +1,180 @@
+/* ========== 基本リセット・全体 ========== */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #cc0000;
+  overflow: hidden;
+  height: 100vh;
+  font-family: 'Courier New', monospace;
+  animation: chaosZoom 10s infinite alternate ease-in-out;
+  color: #660000;
+}
+
+/* ズーム＆回転揺れ演出 */
+@keyframes chaosZoom {
+  0% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
+  50% { transform: scale(1.05) rotate(1deg); filter: hue-rotate(20deg); }
+  100% { transform: scale(0.98) rotate(-1deg); filter: hue-rotate(-20deg); }
+}
+
+/* ポップアップ揺れ */
+@keyframes shake {
+  0%, 100% { transform: translate(0,0); }
+  25% { transform: translate(2px, -2px); }
+  50% { transform: translate(-2px, 2px); }
+  75% { transform: translate(2px, 2px); }
+}
+
+/* ボタン点滅 */
+@keyframes blink {
+  0%, 100% { background-color: yellow; }
+  50% { background-color: orange; }
+}
+
+/* ======= ポップアップ基本 ======= */
+.popup {
+  position: absolute;
+  width: 300px;
+  background: white;
+  border: 3px solid black;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+  z-index: 10;
+  animation: shake 0.3s infinite;
+  font-size: 14px;
+  color: red;
+}
+
+.popup-header {
+  background: #333;
+  color: white;
+  padding: 6px 10px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-body {
+  padding: 10px;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  color: red;
+}
+
+.close-btn {
+  background: red;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 6px;
+}
+
+/* ====== 今すぐ保護ボタン ====== */
+.action-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 25px;
+  font-size: 18px;
+  background: yellow;
+  color: red;
+  border: 3px solid red;
+  cursor: pointer;
+  z-index: 999;
+  animation: blink 0.8s infinite;
+  font-family: sans-serif;
+}
+
+/* 文字のぼやけ＆グリッチ感 */
+.glitch {
+  background: #f0f0f0;
+  color: #999;
+  font-family: monospace;
+  font-size: 12px;
+  filter: blur(0.8px);
+}
+
+/* ====== 中央の超多情報ポップアップ ====== */
+.center-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 6px solid yellow;
+  padding: 30px;
+  box-shadow: 0 0 30px black;
+  text-align: left;
+  z-index: 1000;
+  max-width: 600px;
+  max-height: 400px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.3em;
+  color: #660000;
+}
+
+.center-alert h1 {
+  margin-top: 0;
+  color: darkred;
+  font-size: 22px;
+  text-align: center;
+}
+
+.center-alert h2 {
+  color: #990000;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.code-block {
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  white-space: pre-wrap;
+  font-size: 12px;
+  font-family: monospace;
+  color: #333;
+}
+
+/* ====== 新アニメーション ====== */
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+.slide-down {
+  animation: slideDown 0.8s ease-out;
+}
+
+@keyframes fadeUp {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-up {
+  animation: fadeUp 1.2s ease-out;
+}
+
+.countdown {
+  background: black !important;
+  color: lime !important;
+  font-family: monospace;
+  text-align: center;
+}
