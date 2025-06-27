@@ -7,115 +7,144 @@
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
-      height: 100vh;
+      background: #cc0000;
       overflow: hidden;
-      animation: pulseBg 1.5s infinite;
-    }
-
-    @keyframes pulseBg {
-      0% { background-color: #ff0000; }
-      50% { background-color: #cc0000; }
-      100% { background-color: #ff0000; }
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
+      height: 100vh;
+      font-family: sans-serif;
     }
 
     .popup {
+      position: absolute;
+      width: 300px;
       background: white;
-      color: red;
-      border: 8px solid yellow;
-      padding: 40px;
-      box-shadow: 0 0 30px black;
-      text-align: center;
-      max-width: 600px;
-      animation: shake 0.6s infinite;
+      border: 3px solid black;
+      box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+      z-index: 10;
+      animation: shake 0.3s infinite;
     }
 
-    @keyframes shake {
-      0%, 100% { transform: translateX(-2px); }
-      50% { transform: translateX(2px); }
-    }
-
-    .popup h1 {
-      font-size: 26px;
-      margin: 0;
-      color: darkred;
-    }
-
-    .popup p {
-      font-size: 18px;
-      margin: 20px 0;
-    }
-
-    .alert-btn {
-      padding: 15px 30px;
-      font-size: 20px;
-      background: red;
+    .popup-header {
+      background: #333;
       color: white;
-      border: 3px solid yellow;
+      padding: 6px 10px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .popup-body {
+      padding: 10px;
+      color: red;
+      font-size: 14px;
+    }
+
+    .close-btn {
+      background: red;
+      border: none;
+      color: white;
       cursor: pointer;
+      font-size: 12px;
+      padding: 2px 6px;
+    }
+
+    .action-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 25px;
+      font-size: 18px;
+      background: yellow;
+      color: red;
+      border: 3px solid red;
+      cursor: pointer;
+      z-index: 999;
       animation: blink 0.8s infinite;
     }
 
     @keyframes blink {
-      0%, 100% { background-color: red; }
-      50% { background-color: darkred; }
+      0%, 100% { background-color: yellow; }
+      50% { background-color: orange; }
     }
 
-    .notice {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background: rgba(255,255,255,0.8);
-      color: black;
-      padding: 10px 14px;
-      font-size: 13px;
-      border-radius: 6px;
-      z-index: 20;
+    @keyframes shake {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(2px, -2px); }
+      50% { transform: translate(-2px, 2px); }
+      75% { transform: translate(2px, 2px); }
+    }
+
+    .glitch {
+      background: #f0f0f0;
+      color: #999;
+      font-family: monospace;
+      font-size: 12px;
+      filter: blur(0.8px);
     }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <div class="popup">
-      <h1>⚠ 緊急セキュリティ警告</h1>
-      <p>
-        あなたのデバイスは<strong>3つのウイルス</strong>に感染しています：<br>
-        Trojan.GenericKD, JS:Redirector-QX, Adware.FakeAlert.<br><br>
-        個人情報が漏洩する危険があります。
-      </p>
-      <button class="alert-btn" onclick="location.href='https://kazi-ki.github.io/Pop-up-/'">今すぐ保護する</button>
-    </div>
-  </div>
 
-  <div class="notice">⚠ このページは教育目的の偽サイト例です</div>
+<button class="action-btn" onclick="spamPopups()">今すぐ保護する</button>
 
-  <audio id="beep" autoplay loop>
-    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
-    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.mp3" type="audio/mpeg">
-  </audio>
+<script>
+  const normalMessages = [
+    "あなたのPCは危険にさらされています！",
+    "トロイの木馬が検出されました。",
+    "不正アクセスが発生しました！",
+    "個人情報が盗まれています。",
+    "Windowsセキュリティによる警告！"
+  ];
 
-  <script>
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i < 3) {
-        alert("警告：不正アクセスの可能性があります！");
-        i++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 2500);
-  </script>
+  const glitchMessages = [
+    "ﾋﾞ.ﾋﾞｯﾋﾞ… ﾌｧｲ.ﾙ.ｶﾞ...💀",
+    "!!!###@@@ERROR_CODE:ABRUPT!!!",
+    "<div>[脆弱性情報が破損]</div>",
+    "?????? ***** ||||| !!!!!",
+    "<img src='404.png'> が見つかりません"
+  ];
+
+  function createPopup(isGlitch = false) {
+    const popup = document.createElement("div");
+    popup.className = "popup";
+
+    if (isGlitch) popup.classList.add("glitch");
+
+    popup.style.top = `${Math.random() * 80}vh`;
+    popup.style.left = `${Math.random() * 80}vw`;
+    popup.style.transform = `rotate(${(Math.random() - 0.5) * 10}deg)`;
+
+    popup.innerHTML = `
+      <div class="popup-header">
+        セキュリティ警告
+        <button class="close-btn">×</button>
+      </div>
+      <div class="popup-body">
+        ${(isGlitch ? glitchMessages : normalMessages)[Math.floor(Math.random() * 5)]}
+      </div>
+    `;
+
+    popup.querySelector(".close-btn").addEventListener("click", () => {
+      // 教育演出：閉じようとしても閉じられない（むしろ増える）
+      createPopup(Math.random() < 0.2);
+    });
+
+    document.body.appendChild(popup);
+  }
+
+  function spamPopups() {
+    for (let i = 0; i < 10; i++) {
+      const isGlitch = Math.random() < 0.3;
+      createPopup(isGlitch);
+    }
+  }
+
+  // 初期表示
+  for (let i = 0; i < 10; i++) {
+    createPopup(Math.random() < 0.3);
+  }
+</script>
+
 </body>
 </html>
