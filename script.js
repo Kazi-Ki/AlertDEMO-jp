@@ -196,5 +196,5 @@ window.addEventListener('load', () => {
 
 setTimeout(() => {
   window.location.href = './warning.html';
-}, 20000); /20秒後にジャンプ
+}, 10000); 
 
