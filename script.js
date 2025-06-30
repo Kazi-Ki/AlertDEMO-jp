@@ -196,5 +196,5 @@ window.addEventListener('load', () => {
 
 setTimeout(() => {
   window.location.href = './warning.html';
-}, 10000); 
+}, 50000); 
 
